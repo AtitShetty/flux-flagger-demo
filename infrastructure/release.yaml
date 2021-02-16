@@ -12,10 +12,10 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: podinfo
-        namespace: atit
+        namespace: flux-system
       interval: 1m
-      install:
-        remediation:
-          retries: 3
+  install:
+    remediation:
+      retries: 3
   values:
     replicaCount: 1
