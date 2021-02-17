@@ -9,7 +9,7 @@ spec:
   http:
     - route:
        - destination:
-           host: backend-podinfo.atit
+           host: backend-podinfo.atit.svc.cluster.local
            port: 
             number: 9898
   gateways:
