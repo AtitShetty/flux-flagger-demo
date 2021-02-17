@@ -4,6 +4,8 @@ metadata:
   name: podinfo
   namespace: atit
 spec:
+  hosts: 
+   - "*"
   http:
     - route:
        - destination:
