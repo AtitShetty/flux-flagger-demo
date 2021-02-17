@@ -5,7 +5,7 @@ metadata:
   namespace: atit
 spec:
   hosts: 
-   - "*"
+   - "backend-podinfo.atit"
   http:
     - route:
        - destination:
