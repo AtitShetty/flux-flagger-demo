@@ -7,4 +7,4 @@ spec:
   http:
     - route:
        - destination:
-           host: backend-podinfo:9898
+           host: backend-podinfo
