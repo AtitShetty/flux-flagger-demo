@@ -2,11 +2,13 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: podinfo
-  namespace: atit
+  namespace: istio-system
 spec:
   hosts: 
    - "backend-podinfo.atit"
   http:
     - route:
        - destination:
-           host: backend-podinfo
+           host: backend-podinfo.atit
+  gateways:
+  - public-gateway
