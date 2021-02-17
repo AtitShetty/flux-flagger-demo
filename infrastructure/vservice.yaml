@@ -5,10 +5,12 @@ metadata:
   namespace: istio-system
 spec:
   hosts: 
-   - "backend-podinfo.atit"
+   - "*"
   http:
     - route:
        - destination:
            host: backend-podinfo.atit
+           port: 
+            number: 9898
   gateways:
   - public-gateway
