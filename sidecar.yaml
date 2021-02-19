@@ -2,7 +2,6 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Sidecar
 metadata:
   name: default
-  namespace: atit
 spec:
   egress:
   - hosts:

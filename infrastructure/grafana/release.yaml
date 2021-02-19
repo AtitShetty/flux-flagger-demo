@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: flagger-grafana
+  namespace: istio-system
+spec:
+  releaseName: flagger-grafana
+  targetNamespace: istio-system
+  chart:
+    spec:
+      chart: flagger-grafana
+      version: ">=0.0.0"
+      sourceRef:
+        kind: HelmRepository
+        name: flagger
+        namespace: istio-system
+  interval: 5m
+  values:
+    url: http://prometheus-server:80
+    
