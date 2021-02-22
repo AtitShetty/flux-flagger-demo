@@ -36,15 +36,15 @@ spec:
   skipAnalysis: false
   analysis:
     # schedule interval (default 60s)
-    interval: 90s
+    interval: 60s
     # max number of failed metric checks before rollback
     threshold: 3
     # max traffic percentage routed to canary
     # percentage (0-100)
-    maxWeight: 60
+    maxWeight: 50
     # canary increment step
     # percentage (0-100)
-    stepWeight: 20
+    stepWeight: 10
     # Istio Prometheus checks
     metrics:
       - name: request-success-rate
