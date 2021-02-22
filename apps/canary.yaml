@@ -62,7 +62,7 @@ spec:
           cmd: "curl -sd 'test' http://backend-podinfo-canary.ffdemo.svc.cluster.local:9898/token | grep token"
       - name: load-test
         type: rollout
-        timeout: 5s
+        timeout: 30s
         url: http://flagger-loadtester.flagger-test/
         metadata:
           type: cmd
