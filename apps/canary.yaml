@@ -1,0 +1,70 @@
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: backend
+  namespace: ffdemo
+spec:
+  # deployment reference
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: backend
+  # the maximum time in seconds for the canary deployment
+  # to make progress before it is rollback (default 600s)
+  progressDeadlineSeconds: 600
+  # HPA reference (optional)
+  # autoscalerRef:
+  #   apiVersion: autoscaling/v2beta1
+  #   kind: HorizontalPodAutoscaler
+  #   name: backend
+  service:
+    # container port
+    port: 9898
+    trafficPolicy:
+      tls:
+        # use ISTIO_MUTUAL when mTLS is enabled
+        mode: DISABLE
+    gateways:
+      - public-gateway.istio-system.svc.cluster.local
+    hosts:
+      - "*"
+    retries:
+      attempts: 3
+      perTryTimeout: 1s
+      retryOn: "gateway-error,connect-failure,refused-stream"
+  # promote the canary without analysing it (default false)
+  skipAnalysis: false
+  analysis:
+    # schedule interval (default 60s)
+    interval: 1m
+    # max number of failed metric checks before rollback
+    threshold: 5
+    # max traffic percentage routed to canary
+    # percentage (0-100)
+    maxWeight: 50
+    # canary increment step
+    # percentage (0-100)
+    stepWeight: 10
+    # Istio Prometheus checks
+    metrics:
+      - name: request-success-rate
+        thresholdRange:
+          min: 99
+        interval: 1m
+    # tests
+    webhooks:
+      - name: acceptance-test
+        type: pre-rollout
+        url: http://flagger-loadtester.flagger-test/
+        timeout: 30s
+        metadata:
+          type: bash
+          cmd: "curl -sd 'test' http://backend-canary.ffdemo.svc.cluster.local:9898/token | grep token"
+      - name: load-test
+        type: rollout
+        timeout: 5s
+        url: http://flagger-loadtester.test/
+        metadata:
+          type: cmd
+          cmd: "hey -z 1m -q 10 -c 2 http://backend-canary.ffdemo.svc.cluster.local:9898/"
+          logCmdOutput: "true"
