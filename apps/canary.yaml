@@ -38,7 +38,7 @@ spec:
     # schedule interval (default 60s)
     interval: 90s
     # max number of failed metric checks before rollback
-    threshold: 3
+    threshold: 5
     # max traffic percentage routed to canary
     # percentage (0-100)
     maxWeight: 50
@@ -50,7 +50,7 @@ spec:
       - name: request-success-rate
         thresholdRange:
           min: 99
-        interval: 1m
+        interval: 2m
     # tests
     webhooks:
       - name: acceptance-test
@@ -65,5 +65,5 @@ spec:
         url: http://flagger-loadtester.flagger-test/
         metadata:
           type: cmd
-          cmd: "hey -z 2m -q 10 -c 2 http://backend-podinfo-canary.ffdemo.svc.cluster.local:9898/"
+          cmd: "hey -z 2m -q 100 -c 2 http://backend-podinfo-canary.ffdemo.svc.cluster.local:9898/"
           logCmdOutput: "true"
