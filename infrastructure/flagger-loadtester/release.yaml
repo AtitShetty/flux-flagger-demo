@@ -7,7 +7,7 @@ spec:
   targetNamespace: flagger-test
   chart:
     spec:
-      chart: flagger-loadtester
+      chart: loadtester
       version: ">=0.0.0"
       sourceRef:
         kind: HelmRepository
