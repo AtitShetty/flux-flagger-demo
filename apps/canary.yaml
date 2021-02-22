@@ -59,12 +59,12 @@ spec:
         timeout: 30s
         metadata:
           type: bash
-          cmd: "curl -sd 'test' http://backend-canary.ffdemo.svc.cluster.local:9898/token | grep token"
+          cmd: "curl -sd 'test' http://backend-podinfo-canary.ffdemo.svc.cluster.local:9898/token | grep token"
       - name: load-test
         type: rollout
         timeout: 5s
         url: http://flagger-loadtester.test/
         metadata:
           type: cmd
-          cmd: "hey -z 1m -q 10 -c 2 http://backend-canary.ffdemo.svc.cluster.local:9898/"
+          cmd: "hey -z 1m -q 10 -c 2 http://backend-podinfo-canary.ffdemo.svc.cluster.local:9898/"
           logCmdOutput: "true"
