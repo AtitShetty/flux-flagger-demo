@@ -9,9 +9,15 @@ spec:
   chart:
     spec:
       chart: prometheus
-      version: ">=0.0.0"
+      version: "13.4.0"
       sourceRef:
         kind: HelmRepository
         name: prometheus
         namespace: istio-system
   interval: 5m
+  values:
+    server:
+      global:
+        scrape_interval: 10s
+      
+        

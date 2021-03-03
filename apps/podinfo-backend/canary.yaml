@@ -2,7 +2,6 @@ apiVersion: flagger.app/v1beta1
 kind: Canary
 metadata:
   name: backend
-  namespace: ffdemo
 spec:
   # deployment reference
   targetRef:
@@ -36,21 +35,26 @@ spec:
   skipAnalysis: false
   analysis:
     # schedule interval (default 60s)
-    interval: 60s
+    interval: 30s
     # max number of failed metric checks before rollback
-    threshold: 3
+    threshold: 1
     # max traffic percentage routed to canary
     # percentage (0-100)
-    maxWeight: 50
+    maxWeight: 45
     # canary increment step
     # percentage (0-100)
-    stepWeight: 10
+    stepWeight: 15
     # Istio Prometheus checks
     metrics:
       - name: request-success-rate
         thresholdRange:
           min: 99
-        interval: 2m
+        interval: 1m
+    alerts:
+      - name: "info"
+        severity: "info"
+        providerRef:
+          name: teams-alert
     # tests
     webhooks:
       - name: acceptance-test
@@ -59,11 +63,11 @@ spec:
         timeout: 30s
         metadata:
           type: bash
-          cmd: "curl -sd 'test' http://backend-podinfo-canary.ffdemo.svc.cluster.local:9898/token | grep token"
+          cmd: "curl -sd 'test' http://backend-podinfo-canary.atit-pinfobackend.svc.cluster.local:9898/token | grep token"
       - name: load-test
         type: rollout
         url: http://flagger-loadtester.flagger-test/
         metadata:
           type: cmd
-          cmd: "hey -z 2m -q 100 -c 2 http://backend-podinfo-canary.ffdemo.svc.cluster.local:9898/"
+          cmd: "hey -z 1m -q 100 -c 2 http://backend-podinfo-canary.atit-pinfobackend.svc.cluster.local:9898/"
           logCmdOutput: "true"

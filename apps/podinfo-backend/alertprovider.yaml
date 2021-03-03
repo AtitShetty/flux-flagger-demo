@@ -1,0 +1,10 @@
+apiVersion: flagger.app/v1beta1
+kind: AlertProvider
+metadata:
+  name: teams-alert
+spec:
+  type: msteams
+  channel: general
+  username: flagger
+  # webhook address (ignored if secretRef is specified)
+  address: https://hclo365.webhook.office.com/webhookb2/0aebe10d-4a76-4746-ba55-4797e67b3097@189de737-c93a-4f5a-8b68-6f4ca9941912/IncomingWebhook/ac94eff489e84d759aa58626b9736e20/960108f4-aee8-42b9-bf70-d14013abbf01
