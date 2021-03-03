@@ -50,11 +50,11 @@ spec:
         thresholdRange:
           min: 99
         interval: 1m
-    alerts:
-      - name: "info"
-        severity: "info"
-        providerRef:
-          name: teams-alert
+    # alerts:
+    #   - name: "info"
+    #     severity: "info"
+    #     providerRef:
+    #       name: teams-alert
     # tests
     webhooks:
       - name: acceptance-test
